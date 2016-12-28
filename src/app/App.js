@@ -1,17 +1,28 @@
 import React from 'react';
-// import 'react-toolbox/lib/commons.scss';           // Import common styles
-import PurpleAppBar from './PurpleAppBar.js';      // AppBar with simple overrides
-import SuccessButton from './SuccessButton.js';    // A button with complex overrides
-import { Button } from 'react-toolbox/lib/button'; // Bundled component import
+import { AppBar } from 'react-toolbox/lib/app_bar';
+import { Layout, Panel } from 'react-toolbox/lib/layout';
+import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
 
-const App = () => (
-  <div>
-    <PurpleAppBar />
-    <section style={{ padding: 20 }}>
-      <SuccessButton label='Success' primary raised />
-      <Button label='Primary Button' primary />
-    </section>
-  </div>
-);
+export default class App extends React.Component {
+    state = {
+    };
 
-export default App;
+    render() {
+        return (
+            <Layout>
+                <Panel>
+                    <AppBar title='Stimmung' leftIcon='insert_emoticon'/>
+                    <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
+                    <List selectable ripple>
+                        <ListSubHeader caption="Häufig"/>
+                        <ListItem caption="Glücklich" rightIcon="star"/>
+                        <ListItem caption="Nervös" rightIcon="star"/>
+                        <ListSubHeader caption="Alle"/>
+                        <ListItem caption="Müde" rightIcon="star_border"/>
+                        <ListItem caption="Wütend" rightIcon="star_border"/>
+                    </List>
+                    </div>
+                </Panel>
+            </Layout>);
+    }
+}

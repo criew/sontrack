@@ -16,7 +16,7 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.scss', '.css', '.js', '.json'],
+      extensions: ['', '.js', '.scss', '.css','.json'],
     modulesDirectories: [
       'node_modules',
       path.resolve(__dirname, './node_modules')
@@ -26,16 +26,19 @@ module.exports = {
     loaders: [
       {
         test: /(\.js|\.jsx)$/,
+        include: __dirname,
         exclude: /(node_modules)/,
         loader: 'babel',
-        query: { presets: ['es2015', 'stage-0', 'react'] }
+        query: {
+            plugins: ['transform-runtime'],
+            presets: ['es2015', 'stage-0', 'react']
+        }
       }, {
         test: /(\.scss|\.css)$/,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
+        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'),
       }
     ]
   },
-  postcss: [autoprefixer],
   sassLoader: {
     data: '@import "theme/_config.scss";',
     includePaths: [path.resolve(__dirname, './src/app')]
@@ -43,11 +46,6 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('bundle.css', { allChunks: true }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.bundle.js',
-      minChunks: Infinity
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
